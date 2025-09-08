@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import com.example.booking.audit.Auditable;
 
 @Entity
-@Table(name = "user", schema = "eventbooking")
+@Table(name = "users", schema = "eventbooking")
 public class User extends Auditable<Long> {
 
 	@Id
