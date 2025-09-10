@@ -1,9 +1,5 @@
 package com.example.booking.controller;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -33,7 +29,7 @@ public class AuthController {
 	    boolean valid = authService.validateUser(user.getEmail(), user.getPassword());
 
 	    if (valid) {
-	        User dbUser = authService.getUserByEmail(user.getEmail()); // fetch full user
+	        User dbUser = authService.getUserByEmail(user.getEmail());
 	        String token = jwtUtil.generateToken(dbUser.getEmail(), dbUser.getUserId());
 
 	        LoginResponse response = new LoginResponse(
@@ -45,13 +41,9 @@ public class AuthController {
 
 	        return ResponseEntity.ok(response);
 	    } else {
-	        LoginResponse response = new LoginResponse(
-	            "Invalid Credentials",
-	            null,
-	            null,
-	            null
-	        );
-	        return ResponseEntity.status(401).body(response);
+	        return ResponseEntity
+	               .status(401)
+	               .body(new LoginResponse("Invalid Credentials", null, null, null));
 	    }
 	}
 
