@@ -1,11 +1,15 @@
 package com.example.booking.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.example.booking.audit.Auditable;
 
@@ -26,6 +30,13 @@ public class User extends Auditable<Long> {
 
 	@Column(name = "role")
 	private String role; // CUSTOMER, ADMIN
+
+	@Column(name = "resetToken")
+	private String resetToken;
+
+	@Column(name = "reset_token_expiry")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date resetTokenExpiry;
 
 	public Long getUserId() {
 		return userId;
@@ -57,6 +68,22 @@ public class User extends Auditable<Long> {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public String getResetToken() {
+		return resetToken;
+	}
+
+	public void setResetToken(String resetToken) {
+		this.resetToken = resetToken;
+	}
+
+	public Date getResetTokenExpiry() {
+		return resetTokenExpiry;
+	}
+
+	public void setResetTokenExpiry(Date resetTokenExpiry) {
+		this.resetTokenExpiry = resetTokenExpiry;
 	}
 
 }

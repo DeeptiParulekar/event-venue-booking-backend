@@ -12,4 +12,8 @@ public interface AuthService {
 
 	User getUserByEmail(String email);
 
+	String forgotPassword(String email);
+
+	String resetPassword(String token, String newPassword);
+
 }

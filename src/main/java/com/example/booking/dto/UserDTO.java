@@ -1,11 +1,17 @@
 package com.example.booking.dto;
 
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "userId", "email", "password", "role" })
+@JsonPropertyOrder({ "userId", "email", "password", "role", "resetToken", "resetTokenExpiry" })
 public class UserDTO {
 
 	@JsonProperty("userId")
@@ -19,6 +25,12 @@ public class UserDTO {
 
 	@JsonProperty("role")
 	private String role; // CUSTOMER, ADMIN
+
+	@JsonProperty("resetToken")
+	private String resetToken;
+
+	@JsonProperty("reset_token_expiry")
+	private Date resetTokenExpiry;
 
 	public Long getUserId() {
 		return userId;
@@ -50,6 +62,22 @@ public class UserDTO {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public String getResetToken() {
+		return resetToken;
+	}
+
+	public void setResetToken(String resetToken) {
+		this.resetToken = resetToken;
+	}
+
+	public Date getResetTokenExpiry() {
+		return resetTokenExpiry;
+	}
+
+	public void setResetTokenExpiry(Date resetTokenExpiry) {
+		this.resetTokenExpiry = resetTokenExpiry;
 	}
 
 }
