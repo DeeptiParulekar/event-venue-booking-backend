@@ -129,8 +129,32 @@ public class AuthServiceImpl implements AuthService {
 		return message;
 	}
 
+//	@Override
+//	public String resetPassword(String token, String newPassword) {
+//		Optional<User> optionalUser = userRepository.findByResetToken(token);
+//
+//		if (optionalUser.isEmpty()) {
+//			return "Invalid or expired token.";
+//		}
+//
+//		User user = optionalUser.get();
+//		Date now = new Date();
+//
+//		if (user.getResetTokenExpiry() == null || user.getResetTokenExpiry().before(now)) {
+//			return "Token has expired.";
+//		}
+//
+//		user.setPassword(passwordEncoder.encode(newPassword));
+//		user.setResetToken(null);
+//		user.setResetTokenExpiry(null);
+//		userRepository.save(user);
+//
+//		return "Password reset successfully.";
+//	}
+
 	@Override
 	public String resetPassword(String token, String newPassword) {
+		// Find user by reset token
 		Optional<User> optionalUser = userRepository.findByResetToken(token);
 
 		if (optionalUser.isEmpty()) {
@@ -140,15 +164,19 @@ public class AuthServiceImpl implements AuthService {
 		User user = optionalUser.get();
 		Date now = new Date();
 
+		// Check if token has expired
 		if (user.getResetTokenExpiry() == null || user.getResetTokenExpiry().before(now)) {
 			return "Token has expired.";
 		}
 
+		// Encode new password and save user
 		user.setPassword(passwordEncoder.encode(newPassword));
-		user.setResetToken(null);
-		user.setResetTokenExpiry(null);
+		user.setResetToken(null); // Clear token after reset
+		user.setResetTokenExpiry(null); // Clear expiry
+
 		userRepository.save(user);
 
 		return "Password reset successfully.";
 	}
+
 }
