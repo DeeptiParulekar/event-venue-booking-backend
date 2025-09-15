@@ -5,14 +5,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "venueId", "name", "type", "address", "capacity", "pricePerDay" })
+@JsonPropertyOrder({ "venueId", "venueName", "type", "address", "capacity", "pricePerDay", "contactpersonName",
+		"contactpersonNumber", "city", "state", "pincode", "" })
 public class VenueDTO {
 
 	@JsonProperty("venueId")
 	private long venueId;
 
-	@JsonProperty("name")
-	private String name;
+	@JsonProperty("venueName")
+	private String venueName;
 
 	@JsonProperty("type")
 	private String type; // HALL, RESORT, CATERER, DECORATOR
@@ -22,6 +23,21 @@ public class VenueDTO {
 
 	@JsonProperty("capacity")
 	private int capacity;
+
+	@JsonProperty("contactpersonName")
+	private String contactpersonName;
+
+	@JsonProperty("contactpersonNumber")
+	private String contactpersonNumber;
+
+	@JsonProperty("city")
+	private String city;
+
+	@JsonProperty("state")
+	private String state;
+
+	@JsonProperty("pincode")
+	private String pincode;
 
 	@JsonProperty("pricePerDay")
 	private double pricePerDay;
@@ -34,12 +50,12 @@ public class VenueDTO {
 		this.venueId = venueId;
 	}
 
-	public String getName() {
-		return name;
+	public String getVenueName() {
+		return venueName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setVenueName(String venueName) {
+		this.venueName = venueName;
 	}
 
 	public String getType() {
@@ -64,6 +80,46 @@ public class VenueDTO {
 
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
+	}
+
+	public String getContactpersonName() {
+		return contactpersonName;
+	}
+
+	public void setContactpersonName(String contactpersonName) {
+		this.contactpersonName = contactpersonName;
+	}
+
+	public String getContactpersonNumber() {
+		return contactpersonNumber;
+	}
+
+	public void setContactpersonNumber(String contactpersonNumber) {
+		this.contactpersonNumber = contactpersonNumber;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getPincode() {
+		return pincode;
+	}
+
+	public void setPincode(String pincode) {
+		this.pincode = pincode;
 	}
 
 	public double getPricePerDay() {

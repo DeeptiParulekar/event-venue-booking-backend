@@ -18,8 +18,8 @@ public class Venue extends Auditable<Long> {
 	@Column(name = "venueId")
 	private Long venueId;
 
-	@Column(name = "name")
-	private String name;
+	@Column(name = "venueName")
+	private String venueName;
 
 	@Column(name = "type")
 	private String type; // HALL, RESORT, CATERER, DECORATOR
@@ -33,6 +33,21 @@ public class Venue extends Auditable<Long> {
 	@Column(name = "pricePerDay")
 	private double pricePerDay;
 
+	@Column(name = "contactpersonName")
+	private String contactpersonName;
+
+	@Column(name = "contactpersonNumber")
+	private String contactpersonNumber;
+
+	@Column(name = "city")
+	private String city;
+
+	@Column(name = "state")
+	private String state;
+
+	@Column(name = "pincode")
+	private String pincode;
+
 	public Long getVenueId() {
 		return venueId;
 	}
@@ -41,12 +56,12 @@ public class Venue extends Auditable<Long> {
 		this.venueId = venueId;
 	}
 
-	public String getName() {
-		return name;
+	public String getVenueName() {
+		return venueName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setVenueName(String venueName) {
+		this.venueName = venueName;
 	}
 
 	public String getType() {
@@ -79,6 +94,46 @@ public class Venue extends Auditable<Long> {
 
 	public void setPricePerDay(double pricePerDay) {
 		this.pricePerDay = pricePerDay;
+	}
+
+	public String getContactpersonName() {
+		return contactpersonName;
+	}
+
+	public void setContactpersonName(String contactpersonName) {
+		this.contactpersonName = contactpersonName;
+	}
+
+	public String getContactpersonNumber() {
+		return contactpersonNumber;
+	}
+
+	public void setContactpersonNumber(String contactpersonNumber) {
+		this.contactpersonNumber = contactpersonNumber;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getPincode() {
+		return pincode;
+	}
+
+	public void setPincode(String pincode) {
+		this.pincode = pincode;
 	}
 
 }

@@ -45,7 +45,7 @@ public class DashboardServiceImpl implements DashboardService {
 			RecentBookingDTO r = new RecentBookingDTO();
 			r.setBookingId(b.getBookingId());
 			r.setUserEmail(b.getUser() != null ? b.getUser().getEmail() : null);
-			r.setVenueName(b.getVenue() != null ? b.getVenue().getName() : null);
+			r.setVenueName(b.getVenue() != null ? b.getVenue().getVenueName() : null);
 			r.setBookingDate(b.getBookingDate());
 			r.setStatus(b.getStatus());
 			return r;
