@@ -3,6 +3,7 @@ package com.example.booking.service;
 import java.util.List;
 
 import com.example.booking.dto.UserDTO;
+import com.example.booking.entity.User;
 
 public interface UserService {
 
@@ -15,5 +16,7 @@ public interface UserService {
 	UserDTO getUserById(Long userId);
 
 	void deleteUser(Long userId);
+
+	User getUserByEmail(String email);
 
 }

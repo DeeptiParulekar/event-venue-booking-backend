@@ -29,7 +29,7 @@ public class User extends Auditable<Long> {
 	private String password;
 
 	@Column(name = "role")
-	private String role; // CUSTOMER, ADMIN
+	private String role;  // CUSTOMER, ADMIN
 
 	@Column(name = "resetToken")
 	private String resetToken;
