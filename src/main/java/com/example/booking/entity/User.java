@@ -29,7 +29,7 @@ public class User extends Auditable<Long> {
 	private String password;
 
 	@Column(name = "role")
-	private String role;  // CUSTOMER, ADMIN
+	private String role; // CUSTOMER, ADMIN
 
 	@Column(name = "resetToken")
 	private String resetToken;
@@ -37,6 +37,9 @@ public class User extends Auditable<Long> {
 	@Column(name = "reset_token_expiry")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date resetTokenExpiry;
+
+	@Column(name = "userName")
+	private String userName;
 
 	public Long getUserId() {
 		return userId;
@@ -84,6 +87,14 @@ public class User extends Auditable<Long> {
 
 	public void setResetTokenExpiry(Date resetTokenExpiry) {
 		this.resetTokenExpiry = resetTokenExpiry;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 }

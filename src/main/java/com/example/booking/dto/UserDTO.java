@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "userId", "email", "password", "role", "resetToken", "resetTokenExpiry" })
+@JsonPropertyOrder({ "userId", "email", "password", "role", "resetToken", "resetTokenExpiry", "userName" })
 public class UserDTO {
 
 	@JsonProperty("userId")
@@ -27,6 +27,9 @@ public class UserDTO {
 
 	@JsonProperty("reset_token_expiry")
 	private Date resetTokenExpiry;
+
+	@JsonProperty("userName")
+	private String userName;
 
 	public Long getUserId() {
 		return userId;
@@ -74,6 +77,14 @@ public class UserDTO {
 
 	public void setResetTokenExpiry(Date resetTokenExpiry) {
 		this.resetTokenExpiry = resetTokenExpiry;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 }

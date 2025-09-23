@@ -32,12 +32,21 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
+//            .authorizeRequests(requests -> requests
+//                .antMatchers("/api/auth/**", "/api/public/**").permitAll()
+//                .antMatchers("/api/dashboard/**").hasAuthority("ADMIN")
+//                .antMatchers("/api/venues/**").hasAuthority("USER")
+//                .anyRequest().authenticated()
+//            )
+            
             .authorizeRequests(requests -> requests
-                .antMatchers("/api/auth/**", "/api/public/**").permitAll()
-                .antMatchers("/api/dashboard/**").hasAuthority("ADMIN")
-                .antMatchers("/api/venues/**").hasAuthority("USER")
-                .anyRequest().authenticated()
-            )
+            	    .antMatchers("/api/auth/**", "/api/public/**").permitAll()
+            	    .antMatchers("/api/venues/**").permitAll() // 👈 venues are public
+            	    .antMatchers("/api/booking/**").hasAuthority("USER") // 👈 only logged-in users can book
+            	    .antMatchers("/api/dashboard/**").hasAuthority("ADMIN")
+            	    .anyRequest().authenticated()
+            	)
+
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
             .httpBasic(withDefaults())
             .formLogin(login -> login.disable());

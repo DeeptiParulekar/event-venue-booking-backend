@@ -27,9 +27,8 @@ public class BookingMapper {
 		booking.setUser(user);
 
 		Venue venue = new Venue();
-		venue.setVenueId(dto.getVenueId());
+//		venue.setVenueId(dto.getVenueId());
 		booking.setVenue(venue);
-
 		booking.setBookingDate(dto.getBookingDate());
 		booking.setStatus(dto.getStatus());
 		booking.setTotalAmount(dto.getTotalAmount());
@@ -44,7 +43,7 @@ public class BookingMapper {
 		BookingDTO dto = new BookingDTO();
 		dto.setBookingId(booking.getBookingId());
 		dto.setUserId(booking.getUser() != null ? booking.getUser().getUserId() : null);
-		dto.setVenueId(booking.getVenue() != null ? booking.getVenue().getVenueId() : null);
+//		dto.setVenueId(booking.getVenue() != null ? booking.getVenue().getVenueId() : null);
 		dto.setBookingDate(booking.getBookingDate());
 		dto.setStatus(booking.getStatus());
 		dto.setTotalAmount(booking.getTotalAmount());

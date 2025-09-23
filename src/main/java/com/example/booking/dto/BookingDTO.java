@@ -7,7 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "bookingId", "userId", "venueId", "bookingDate", "status" })
+@JsonPropertyOrder({ "bookingId", "userId", "userName", "venueId", "venueName", "bookingDate", "status", "totalAmount",
+		"userEmail" })
 public class BookingDTO {
 
 	@JsonProperty("bookingId")
@@ -16,8 +17,14 @@ public class BookingDTO {
 	@JsonProperty("userId")
 	private long userId;
 
-	@JsonProperty("venueId")
-	private long venueId;
+	@JsonProperty("userName")
+	private String userName;
+
+//	@JsonProperty("venueId")
+//	private long venueId;
+
+	@JsonProperty("venueName")
+	private String venueName;
 
 	@JsonProperty("bookingDate")
 	private Date bookingDate;
@@ -27,6 +34,9 @@ public class BookingDTO {
 
 	@JsonProperty("totalAmount")
 	private double totalAmount;
+
+	@JsonProperty("userEmail")
+	private String userEmail;
 
 	public Long getBookingId() {
 		return bookingId;
@@ -44,12 +54,28 @@ public class BookingDTO {
 		this.userId = userId;
 	}
 
-	public long getVenueId() {
-		return venueId;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setVenueId(long venueId) {
-		this.venueId = venueId;
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+//	public long getVenueId() {
+//		return venueId;
+//	}
+//
+//	public void setVenueId(long venueId) {
+//		this.venueId = venueId;
+//	}
+
+	public String getVenueName() {
+		return venueName;
+	}
+
+	public void setVenueName(String venueName) {
+		this.venueName = venueName;
 	}
 
 	public Date getBookingDate() {
@@ -74,6 +100,14 @@ public class BookingDTO {
 
 	public void setTotalAmount(double totalAmount) {
 		this.totalAmount = totalAmount;
+	}
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
 
 }

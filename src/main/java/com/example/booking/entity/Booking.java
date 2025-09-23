@@ -39,8 +39,12 @@ public class Booking extends Auditable<Long> {
 	@Column(name = "totalAmount")
 	private double totalAmount;
 
+	@Column(name = "userEmail")
+	private String userEmail;
+
 	public Long getBookingId() {
 		return bookingId;
+
 	}
 
 	public void setBookingId(Long bookingId) {
@@ -86,6 +90,14 @@ public class Booking extends Auditable<Long> {
 	public void setTotalAmount(double totalAmount) {
 		this.totalAmount = totalAmount;
 
+	}
+
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
 
 }
