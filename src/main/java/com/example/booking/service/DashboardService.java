@@ -6,4 +6,6 @@ public interface DashboardService {
 
 	DashboardDTO getMetrics();
 
+	DashboardDTO getUserMetrics();
+
 }

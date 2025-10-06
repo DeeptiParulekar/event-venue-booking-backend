@@ -18,52 +18,78 @@ public class SecurityConfig {
 
 	@Autowired
 	private JwtFilter jwtFilter;
-    
-    @Autowired
-    private CustomUserDetailsService customUserDetailsService;
 
-    
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
-        return authConfig.getAuthenticationManager();
-    }
+	@Autowired
+	private CustomUserDetailsService customUserDetailsService;
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf(csrf -> csrf.disable())
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+		return authConfig.getAuthenticationManager();
+	}
+
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//    	
+//        http
+//            .csrf(csrf -> csrf.disable())
+//            
 //            .authorizeRequests(requests -> requests
-//                .antMatchers("/api/auth/**", "/api/public/**").permitAll()
-//                .antMatchers("/api/dashboard/**").hasAuthority("ADMIN")
-//                .antMatchers("/api/venues/**").hasAuthority("USER")
-//                .anyRequest().authenticated()
-//            )
-            
-            .authorizeRequests(requests -> requests
-            	    .antMatchers("/api/auth/**", "/api/public/**").permitAll()
-            	    .antMatchers("/api/venues/**").permitAll() // 👈 venues are public
-            	    .antMatchers("/api/booking/**").hasAuthority("USER") // 👈 only logged-in users can book
-            	    .antMatchers("/api/dashboard/**").hasAuthority("ADMIN")
-            	    .anyRequest().authenticated()
-            	)
-
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-            .httpBasic(withDefaults())
-            .formLogin(login -> login.disable());
-
-        return http.build();
-    }
-    
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-   
-}
-
-
-
-
+//            	    .antMatchers("/api/auth/**", "/api/public/**").permitAll()
+//            	    .antMatchers("/api/venues/**").permitAll()
+//            	    .antMatchers("/api/booking/**").hasAuthority("USER")
+//            	    .antMatchers("/api/dashboard/admin/**").hasAuthority("ADMIN")  // Admin dashboard
+//            	    .antMatchers("/api/dashboard/user-metrics").hasAuthority("USER") // User dashboard
+//            	    .anyRequest().authenticated()
+//            	)
 //
+//
+//            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+//            .httpBasic(withDefaults())
+//            .formLogin(login -> login.disable());
+//
+//        return http.build();
+//    }
+
+//	@Bean
+//	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//		http.cors().and() // ✅ enable CORS
+//				.csrf(csrf -> csrf.disable()) // disable CSRF
+//				.authorizeRequests(requests -> requests.antMatchers("/api/auth/**", "/api/public/**").permitAll()
+//						.antMatchers("/api/venues/**").permitAll().antMatchers("/api/booking/**").hasAuthority("USER")
+//						.antMatchers("/api/dashboard/admin/**").hasAuthority("ADMIN")
+//						.antMatchers("/api/dashboard/user-metrics").hasAuthority("USER").anyRequest().authenticated())
+//				.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).httpBasic(withDefaults())
+//				.formLogin(login -> login.disable());
+//
+//		return http.build();
+//	}
+	
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	    http.cors().and()
+	        .csrf(csrf -> csrf.disable())
+	        .authorizeRequests(requests -> requests
+	            .antMatchers("/api/auth/**", "/api/public/**").permitAll()
+	            .antMatchers("/api/venues/**").permitAll()
+	            .antMatchers("/api/booking/**").hasAnyAuthority("USER", "ADMIN") // Admin + User
+	            .antMatchers("/api/dashboard/admin/**").hasAuthority("ADMIN")
+	            .antMatchers("/api/dashboard/user-metrics").hasAuthority("USER")
+	            .anyRequest().authenticated()
+	        )
+	        .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+	        .httpBasic(withDefaults())
+	        .formLogin(login -> login.disable());
+
+	    return http.build();
+	}
+
+
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
+}
 
 
