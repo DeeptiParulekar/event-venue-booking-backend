@@ -27,43 +27,6 @@ public class SecurityConfig {
 		return authConfig.getAuthenticationManager();
 	}
 
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//    	
-//        http
-//            .csrf(csrf -> csrf.disable())
-//            
-//            .authorizeRequests(requests -> requests
-//            	    .antMatchers("/api/auth/**", "/api/public/**").permitAll()
-//            	    .antMatchers("/api/venues/**").permitAll()
-//            	    .antMatchers("/api/booking/**").hasAuthority("USER")
-//            	    .antMatchers("/api/dashboard/admin/**").hasAuthority("ADMIN")  // Admin dashboard
-//            	    .antMatchers("/api/dashboard/user-metrics").hasAuthority("USER") // User dashboard
-//            	    .anyRequest().authenticated()
-//            	)
-//
-//
-//            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-//            .httpBasic(withDefaults())
-//            .formLogin(login -> login.disable());
-//
-//        return http.build();
-//    }
-
-//	@Bean
-//	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//		http.cors().and() // ✅ enable CORS
-//				.csrf(csrf -> csrf.disable()) // disable CSRF
-//				.authorizeRequests(requests -> requests.antMatchers("/api/auth/**", "/api/public/**").permitAll()
-//						.antMatchers("/api/venues/**").permitAll().antMatchers("/api/booking/**").hasAuthority("USER")
-//						.antMatchers("/api/dashboard/admin/**").hasAuthority("ADMIN")
-//						.antMatchers("/api/dashboard/user-metrics").hasAuthority("USER").anyRequest().authenticated())
-//				.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).httpBasic(withDefaults())
-//				.formLogin(login -> login.disable());
-//
-//		return http.build();
-//	}
-	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 	    http.cors().and()

@@ -37,52 +37,6 @@ public class AuthController {
 
 	@Autowired
 	private JwtUtil jwtUtil;
-
-//	@PostMapping("/login")
-//	public ResponseEntity<LoginResponse> login(@RequestBody User user) {
-//		boolean valid = authService.validateUser(user.getEmail(), user.getPassword());
-//
-//		if (valid) {
-//			User dbUser = authService.getUserByEmail(user.getEmail());
-//			String token = jwtUtil.generateToken(dbUser.getEmail(), dbUser.getUserId());
-//
-//			LoginResponse response = new LoginResponse("Login Success", token, dbUser.getEmail(), dbUser.getUserId());
-//
-//			return ResponseEntity.ok(response);
-//		} else {
-//			return ResponseEntity.status(401).body(new LoginResponse("Invalid Credentials", null, null, null));
-//		}
-//	}
-
-//	@PostMapping("/login")
-//	public ResponseEntity<?> login(@RequestBody Map<String, String> loginRequest) {
-//		try {
-//			String email = loginRequest.get("email");
-//			String password = loginRequest.get("password");
-//
-//			Authentication auth = authenticationManager
-//					.authenticate(new UsernamePasswordAuthenticationToken(email, password));
-//
-//			User user = userService.getUserByEmail(email);
-//
-//			if (user == null) {
-//				return new ResponseEntity<>(new ErrorDetails(new Date(), "User not found"), HttpStatus.NOT_FOUND);
-//			}
-//
-//			String token = jwtUtil.generateToken(user.getEmail(), user.getUserId());
-//
-//			Map<String, Object> response = new HashMap<>();
-//			response.put("token", token);
-//			response.put("userId", user.getUserId());
-//			response.put("role", user.getRole());
-//			response.put("email", user.getEmail());
-//
-//			return new ResponseEntity<>(response, HttpStatus.OK);
-//
-//		} catch (Exception e) {
-//			return new ResponseEntity<>(new ErrorDetails(new Date(), "Invalid Credentials"), HttpStatus.UNAUTHORIZED);
-//		}
-//	}
 	
 	@PostMapping("/login")
 	public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {

@@ -40,15 +40,26 @@ public class BookingController {
 		}
 	}
 
+//	@PutMapping(value = "/updateBooking", produces = "application/json")
+//	public ResponseEntity<?> updateBooking(@RequestParam Long bookingId, @RequestBody BookingDTO bookingDTO) {
+//		try {
+//			BookingDTO updated = bookingService.updateBooking(bookingDTO); // Or call update if you have it
+//			return new ResponseEntity<>(updated, HttpStatus.OK);
+//		} catch (Exception e) {
+//			return new ResponseEntity<>(new ErrorDetails(new Date(), e.getMessage()), HttpStatus.BAD_REQUEST);
+//		}
+//	}
+	
 	@PutMapping(value = "/updateBooking", produces = "application/json")
-	public ResponseEntity<?> updateBooking(@RequestParam Long bookingId, @RequestBody BookingDTO bookingDTO) {
-		try {
-			BookingDTO updated = bookingService.updateBooking(bookingDTO); // Or call update if you have it
-			return new ResponseEntity<>(updated, HttpStatus.OK);
-		} catch (Exception e) {
-			return new ResponseEntity<>(new ErrorDetails(new Date(), e.getMessage()), HttpStatus.BAD_REQUEST);
-		}
+	public ResponseEntity<?> updateBooking(@RequestBody BookingDTO bookingDTO) {
+	    try {
+	        BookingDTO updated = bookingService.updateBookingStatus(bookingDTO);
+	        return new ResponseEntity<>(updated, HttpStatus.OK);
+	    } catch (Exception e) {
+	        return new ResponseEntity<>(new ErrorDetails(new Date(), e.getMessage()), HttpStatus.BAD_REQUEST);
+	    }
 	}
+
 
 	@GetMapping(value = "/getAllBookings", produces = "application/json")
 	public ResponseEntity<?> getAllBookings() {

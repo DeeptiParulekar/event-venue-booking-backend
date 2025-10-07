@@ -241,6 +241,7 @@
 package com.example.booking.serviceimpl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -322,21 +323,46 @@ public class BookingServiceImpl implements BookingService {
         return responseDTO;
     }
 
+//    @Override
+//    public BookingDTO updateBooking(BookingDTO bookingDTO) {
+//        if (bookingDTO.getBookingId() == null) {
+//            throw new IllegalArgumentException("Booking ID cannot be null for update");
+//        }
+//        Booking booking = bookingMapper.toBooking(bookingDTO);
+//        Booking updated = bookingRepository.save(booking);
+//        return bookingMapper.toBookingDTO(updated);
+//    }
+    
     @Override
-    public BookingDTO updateBooking(BookingDTO bookingDTO) {
+    public BookingDTO updateBookingStatus(BookingDTO bookingDTO) {
         if (bookingDTO.getBookingId() == null) {
             throw new IllegalArgumentException("Booking ID cannot be null for update");
         }
-        Booking booking = bookingMapper.toBooking(bookingDTO);
-        Booking updated = bookingRepository.save(booking);
+
+        Booking existingBooking = bookingRepository.findById(bookingDTO.getBookingId())
+                .orElseThrow(() -> new RuntimeException("Booking not found"));
+
+        // ✅ Only update status
+        existingBooking.setStatus(bookingDTO.getStatus());
+        Booking updated = bookingRepository.save(existingBooking);
+
         return bookingMapper.toBookingDTO(updated);
     }
 
+
+//    @Override
+//    public List<BookingDTO> getAllBookings() {
+//        List<Booking> bookings = bookingRepository.findAll();
+//        return bookingMapper.toBookingDTOList(bookings);
+//    }
+    
     @Override
     public List<BookingDTO> getAllBookings() {
-        List<Booking> bookings = bookingRepository.findAll();
-        return bookingMapper.toBookingDTOList(bookings);
+        return bookingRepository.findAll().stream()
+                .map(bookingMapper::toBookingDTO)
+                .collect(Collectors.toList());
     }
+
 
     @Override
     public BookingDTO getBookingById(Long bookingId) {
