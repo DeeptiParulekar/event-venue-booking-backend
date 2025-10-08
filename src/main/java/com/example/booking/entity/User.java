@@ -41,6 +41,9 @@ public class User extends Auditable<Long> {
 	@Column(name = "userName")
 	private String userName;
 
+	@Column(name = "mobileNo")
+	private String mobileNo;
+
 	public Long getUserId() {
 		return userId;
 	}
@@ -95,6 +98,14 @@ public class User extends Auditable<Long> {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public String getMobileNo() {
+		return mobileNo;
+	}
+
+	public void setMobileNo(String mobileNo) {
+		this.mobileNo = mobileNo;
 	}
 
 }

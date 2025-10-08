@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "userId", "email", "password", "role", "resetToken", "resetTokenExpiry", "userName" })
+@JsonPropertyOrder({ "userId", "email", "password", "role", "resetToken", "resetTokenExpiry", "userName", "mobileNo" })
 public class UserDTO {
 
 	@JsonProperty("userId")
@@ -30,6 +30,9 @@ public class UserDTO {
 
 	@JsonProperty("userName")
 	private String userName;
+
+	@JsonProperty("mobileNo")
+	private String mobileNo;
 
 	public Long getUserId() {
 		return userId;
@@ -85,6 +88,14 @@ public class UserDTO {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public String getMobileNo() {
+		return mobileNo;
+	}
+
+	public void setMobileNo(String mobileNo) {
+		this.mobileNo = mobileNo;
 	}
 
 }
