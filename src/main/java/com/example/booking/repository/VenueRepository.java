@@ -12,7 +12,10 @@ import com.example.booking.entity.Venue;
 @Repository
 public interface VenueRepository extends JpaRepository<Venue, Long> {
 
-	 @Query("SELECT v FROM Venue v WHERE LOWER(TRIM(v.venueName)) = LOWER(TRIM(:name))")
-	    Optional<Venue> findByNameIgnoreCaseTrimmed(@Param("name") String name);
+	@Query("SELECT v FROM Venue v WHERE LOWER(TRIM(v.venueName)) = LOWER(TRIM(:name))")
+	Optional<Venue> findByNameIgnoreCaseTrimmed(@Param("name") String name);
+
+	@Query(value = "SELECT COUNT(*) FROM eventbooking.venue", nativeQuery = true)
+	long countAllVenues();
 
 }
