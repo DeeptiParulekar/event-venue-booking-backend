@@ -193,9 +193,6 @@
 //
 //}
 
-
-
-
 package com.example.booking.serviceimpl;
 
 import java.time.LocalDate;
@@ -212,6 +209,7 @@ import org.springframework.stereotype.Service;
 import com.example.booking.dto.DashboardDTO;
 import com.example.booking.dto.RecentBookingDTO;
 import com.example.booking.dto.UserDashboardDTO;
+import com.example.booking.dto.VenueDTO;
 import com.example.booking.entity.Booking;
 import com.example.booking.repository.BookingRepository;
 import com.example.booking.repository.PaymentRepository;
@@ -221,96 +219,95 @@ import com.example.booking.service.DashboardService;
 @Service
 public class DashboardServiceImpl implements DashboardService {
 
-    @Autowired
-    private VenueRepository venueRepository;
+	@Autowired
+	private VenueRepository venueRepository;
 
-    @Autowired
-    private BookingRepository bookingRepository;
+	@Autowired
+	private BookingRepository bookingRepository;
 
-    @Autowired
-    private PaymentRepository paymentRepository;
+	@Autowired
+	private PaymentRepository paymentRepository;
 
-    // =================== ADMIN DASHBOARD ===================
-    @Override
-    public DashboardDTO getMetrics() {
-        DashboardDTO dto = new DashboardDTO();
+	// =================== ADMIN DASHBOARD ===================
+	@Override
+	public DashboardDTO getMetrics() {
+		DashboardDTO dto = new DashboardDTO();
 
-        dto.setTotalVenues(venueRepository.count());
-        dto.setTotalBookings(bookingRepository.count());
-        dto.setUpcomingBookings(bookingRepository.findUpcoming(LocalDate.now()).size());
-        dto.setRevenue(Optional.ofNullable(paymentRepository.totalRevenue()).orElse(0.0));
+		dto.setTotalVenues(venueRepository.count());
+		dto.setTotalBookings(bookingRepository.count());
+		dto.setUpcomingBookings(bookingRepository.findUpcoming(LocalDate.now()).size());
+		dto.setRevenue(Optional.ofNullable(paymentRepository.totalRevenue()).orElse(0.0));
 
-        // Recent 5 bookings
-        List<RecentBookingDTO> recents = bookingRepository
-                .findAll(PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "bookingDate")))
-                .stream()
-                .map(b -> new RecentBookingDTO(
-                        b.getBookingId(),
-                        b.getUser() != null ? b.getUser().getEmail() : null,
-                        b.getVenue() != null ? b.getVenue().getVenueName() : null,
-                        b.getBookingDate(),
-                        b.getStatus(),
-                        b.getTotalAmount() // ✅ include totalAmount
-                ))
-                .collect(Collectors.toList());
+		// Recent 5 bookings
+		List<RecentBookingDTO> recents = bookingRepository
+				.findAll(PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "bookingDate"))).stream()
+				.map(b -> new RecentBookingDTO(b.getBookingId(), b.getUser() != null ? b.getUser().getEmail() : null,
+						b.getVenue() != null ? b.getVenue().getVenueName() : null, b.getBookingDate(), b.getStatus(),
+						b.getTotalAmount() // ✅ include totalAmount
+				)).collect(Collectors.toList());
 
-        dto.setRecentBookings(recents);
-        return dto;
-    }
+		dto.setRecentBookings(recents);
+		return dto;
+	}
 
-    // =================== USER DASHBOARD ===================
-    @Override
-    public UserDashboardDTO getUserMetrics() {
-        UserDashboardDTO dto = new UserDashboardDTO();
+	// =================== USER DASHBOARD ===================
+	@Override
+	public UserDashboardDTO getUserMetrics() {
+		UserDashboardDTO dto = new UserDashboardDTO();
 
-        // Logged-in user email
-        String currentUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+		// 1️⃣ Logged-in user email
+		String currentUserEmail = SecurityContextHolder.getContext().getAuthentication().getName();
 
-        // Fetch all bookings for this user
-        List<Booking> userBookings = bookingRepository.findByUser_Email(currentUserEmail);
+		// 2️⃣ Fetch all bookings for this user
+		List<Booking> userBookings = bookingRepository.findByUser_Email(currentUserEmail);
 
-        // Total bookings
-        dto.setTotalBookings(userBookings.size());
+		// 3️⃣ Total bookings
+		dto.setTotalBookings(userBookings.size());
 
-        // Upcoming bookings
-        dto.setUpcomingBookings(
-            userBookings.stream()
-                .filter(b -> b.getBookingDate() != null && b.getBookingDate().isAfter(LocalDate.now()))
-                .count()
-        );
+		// 4️⃣ Upcoming bookings
+		dto.setUpcomingBookings(userBookings.stream()
+				.filter(b -> b.getBookingDate() != null && b.getBookingDate().isAfter(LocalDate.now())).count());
 
-        // Total Amount Spent
-        double totalAmount = userBookings.stream()
-                .filter(b -> "BOOKED".equalsIgnoreCase(b.getStatus()))
-                .mapToDouble(Booking::getTotalAmount)
-                .sum();
-        dto.setTotalAmountSpent(totalAmount);
+		// 5️⃣ Total Amount Spent
+		double totalAmount = userBookings.stream().filter(b -> "BOOKED".equalsIgnoreCase(b.getStatus()))
+				.mapToDouble(Booking::getTotalAmount).sum();
+		dto.setTotalAmountSpent(totalAmount);
 
-        // Total Cancellations
-        dto.setTotalCancellations(
-            userBookings.stream()
-                .filter(b -> "CANCELLED".equalsIgnoreCase(b.getStatus()))
-                .count()
-        );
+		// 6️⃣ Total Cancellations
+		dto.setTotalCancellations(
+				userBookings.stream().filter(b -> "CANCELLED".equalsIgnoreCase(b.getStatus())).count());
 
-        // Total Venues
-        dto.setTotalVenues(venueRepository.count());
+		// 7️⃣ Total Venues
+		dto.setTotalVenues(venueRepository.count());
 
-        // Recent Bookings (latest 5)
-        List<RecentBookingDTO> recents = userBookings.stream()
-                .sorted((b1, b2) -> b2.getBookingDate().compareTo(b1.getBookingDate()))
-                .limit(5)
-                .map(b -> new RecentBookingDTO(
-                        b.getBookingId(),
-                        b.getUser() != null ? b.getUser().getEmail() : null,
-                        b.getVenue() != null ? b.getVenue().getVenueName() : null,
-                        b.getBookingDate(),
-                        b.getStatus(),
-                        b.getTotalAmount() // ✅ include totalAmount
-                ))
-                .collect(Collectors.toList());
+		// 8️⃣ Recent Bookings (latest 5)
+		List<RecentBookingDTO> recents = userBookings.stream()
+				.sorted((b1, b2) -> b2.getBookingDate().compareTo(b1.getBookingDate())).limit(5)
+				.map(b -> new RecentBookingDTO(b.getBookingId(), b.getUser() != null ? b.getUser().getEmail() : null,
+						b.getVenue() != null ? b.getVenue().getVenueName() : null, b.getBookingDate(), b.getStatus(),
+						b.getTotalAmount()))
+				.collect(Collectors.toList());
+		dto.setRecentBookings(recents);
 
-        dto.setRecentBookings(recents);
-        return dto;
-    }
+		// 9️⃣ Available Venues
+		List<VenueDTO> venues = venueRepository.findAll().stream().map(v -> {
+			VenueDTO vd = new VenueDTO();
+			vd.setVenueId(v.getVenueId());
+			vd.setVenueName(v.getVenueName());
+			vd.setType(v.getType());
+			vd.setCapacity(v.getCapacity());
+			vd.setPricePerDay(v.getPricePerDay());
+			vd.setAddress(v.getAddress());
+			vd.setCity(v.getCity());
+			vd.setState(v.getState());
+			vd.setPincode(v.getPincode());
+			vd.setContactpersonName(v.getContactpersonName());
+			vd.setContactpersonNumber(v.getContactpersonNumber());
+			vd.setLocation(v.getLocation());
+			return vd;
+		}).collect(Collectors.toList());
+		dto.setAvailableVenues(venues);
+
+		return dto;
+	}
 }

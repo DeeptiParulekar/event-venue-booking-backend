@@ -7,79 +7,85 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-    "totalVenues",
-    "totalBookings",
-    "upcomingBookings",
-    "totalAmountSpent",
-    "totalCancellations",
-    "recentBookings"
-})
+@JsonPropertyOrder({ "totalVenues", "totalBookings", "upcomingBookings", "totalAmountSpent", "totalCancellations",
+		"recentBookings", " availableVenues" })
 public class UserDashboardDTO {
 
-    @JsonProperty("totalVenues")
-    private long totalVenues;
+	@JsonProperty("totalVenues")
+	private long totalVenues;
 
-    @JsonProperty("totalBookings")
-    private long totalBookings;
+	@JsonProperty("totalBookings")
+	private long totalBookings;
 
-    @JsonProperty("upcomingBookings")
-    private long upcomingBookings;
+	@JsonProperty("upcomingBookings")
+	private long upcomingBookings;
 
-    @JsonProperty("totalAmountSpent")
-    private double totalAmountSpent;
+	@JsonProperty("totalAmountSpent")
+	private double totalAmountSpent;
 
-    @JsonProperty("totalCancellations")
-    private long totalCancellations;
+	@JsonProperty("totalCancellations")
+	private long totalCancellations;
 
-    @JsonProperty("recentBookings")
-    private List<RecentBookingDTO> recentBookings;
+	@JsonProperty("recentBookings")
+	private List<RecentBookingDTO> recentBookings;
 
-    public long getTotalVenues() {
-        return totalVenues;
-    }
+	@JsonProperty("availableVenues")
+	private List<VenueDTO> availableVenues;
 
-    public void setTotalVenues(long totalVenues) {
-        this.totalVenues = totalVenues;
-    }
+	public long getTotalVenues() {
+		return totalVenues;
+	}
 
-    public long getTotalBookings() {
-        return totalBookings;
-    }
+	public void setTotalVenues(long totalVenues) {
+		this.totalVenues = totalVenues;
+	}
 
-    public void setTotalBookings(long totalBookings) {
-        this.totalBookings = totalBookings;
-    }
+	public long getTotalBookings() {
+		return totalBookings;
+	}
 
-    public long getUpcomingBookings() {
-        return upcomingBookings;
-    }
+	public void setTotalBookings(long totalBookings) {
+		this.totalBookings = totalBookings;
+	}
 
-    public void setUpcomingBookings(long upcomingBookings) {
-        this.upcomingBookings = upcomingBookings;
-    }
+	public long getUpcomingBookings() {
+		return upcomingBookings;
+	}
 
-    public double getTotalAmountSpent() {
-        return totalAmountSpent;
-    }
+	public void setUpcomingBookings(long upcomingBookings) {
+		this.upcomingBookings = upcomingBookings;
+	}
 
-    public void setTotalAmountSpent(double totalAmountSpent) {
-        this.totalAmountSpent = totalAmountSpent;
-    }
+	public double getTotalAmountSpent() {
+		return totalAmountSpent;
+	}
 
-    public long getTotalCancellations() {
-        return totalCancellations;
-    }
+	public void setTotalAmountSpent(double totalAmountSpent) {
+		this.totalAmountSpent = totalAmountSpent;
+	}
 
-    public void setTotalCancellations(long totalCancellations) {
-        this.totalCancellations = totalCancellations;
-    }
+	public long getTotalCancellations() {
+		return totalCancellations;
+	}
 
-    public List<RecentBookingDTO> getRecentBookings() {
-        return recentBookings;
-    }
+	public void setTotalCancellations(long totalCancellations) {
+		this.totalCancellations = totalCancellations;
+	}
 
-    public void setRecentBookings(List<RecentBookingDTO> recentBookings) {
-        this.recentBookings = recentBookings;
-    }
+	public List<RecentBookingDTO> getRecentBookings() {
+		return recentBookings;
+	}
+
+	public void setRecentBookings(List<RecentBookingDTO> recentBookings) {
+		this.recentBookings = recentBookings;
+	}
+
+	public List<VenueDTO> getAvailableVenues() {
+		return availableVenues;
+	}
+
+	public void setAvailableVenues(List<VenueDTO> availableVenues) {
+		this.availableVenues = availableVenues;
+	}
+
 }
