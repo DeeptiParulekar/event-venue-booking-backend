@@ -1,5 +1,6 @@
 package com.example.booking.entity;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -31,7 +32,7 @@ public class Booking extends Auditable<Long> {
 	private Venue venue;
 
 	@Column(name = "bookingDate")
-	private Date bookingDate;
+	private LocalDate bookingDate;
 
 	@Column(name = "status")
 	private String status; // PENDING, CONFIRMED, CANCELLED
@@ -67,11 +68,11 @@ public class Booking extends Auditable<Long> {
 		this.venue = venue;
 	}
 
-	public Date getBookingDate() {
+	public LocalDate getBookingDate() {
 		return bookingDate;
 	}
 
-	public void setBookingDate(Date bookingDate) {
+	public void setBookingDate(LocalDate bookingDate) {
 		this.bookingDate = bookingDate;
 	}
 
@@ -98,6 +99,11 @@ public class Booking extends Auditable<Long> {
 
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
+	}
+
+	public void setDate(LocalDate date) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

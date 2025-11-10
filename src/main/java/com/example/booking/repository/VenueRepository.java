@@ -1,5 +1,7 @@
 package com.example.booking.repository;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,5 +19,15 @@ public interface VenueRepository extends JpaRepository<Venue, Long> {
 
 	@Query(value = "SELECT COUNT(*) FROM eventbooking.venue", nativeQuery = true)
 	long countAllVenues();
+
+	// Example logic: venue is available if NOT already booked for that date
+	@Query("SELECT v FROM Venue v WHERE v.id NOT IN "
+			+ "(SELECT b.venue.id FROM Booking b WHERE b.bookingDate = :date)")
+	List<Venue> findAvailableVenues(LocalDate date);
+
+	 // Return Optional<Venue> instead of Object
+    Optional<Venue> findByVenueName(String venueName);
+
+	Optional<Venue> findByVenueNameIgnoreCase(String venueName);
 
 }

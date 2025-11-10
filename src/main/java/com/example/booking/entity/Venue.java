@@ -48,6 +48,9 @@ public class Venue extends Auditable<Long> {
 	@Column(name = "pincode")
 	private String pincode;
 
+	@Column(name = "location")
+	private String location;
+
 	public Long getVenueId() {
 		return venueId;
 	}
@@ -134,6 +137,14 @@ public class Venue extends Auditable<Long> {
 
 	public void setPincode(String pincode) {
 		this.pincode = pincode;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 }

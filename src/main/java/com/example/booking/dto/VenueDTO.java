@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "venueId", "venueName", "type", "address", "capacity", "pricePerDay", "contactpersonName",
-		"contactpersonNumber", "city", "state", "pincode", "" })
+		"contactpersonNumber", "city", "state", "pincode", "location" })
 public class VenueDTO {
 
 	@JsonProperty("venueId")
@@ -41,6 +41,9 @@ public class VenueDTO {
 
 	@JsonProperty("pricePerDay")
 	private double pricePerDay;
+
+	@JsonProperty("location")
+	private String location;
 
 	public long getVenueId() {
 		return venueId;
@@ -128,6 +131,14 @@ public class VenueDTO {
 
 	public void setPricePerDay(double pricePerDay) {
 		this.pricePerDay = pricePerDay;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 }

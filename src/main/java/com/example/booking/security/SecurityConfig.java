@@ -34,6 +34,7 @@ public class SecurityConfig {
 	        .authorizeRequests(requests -> requests
 	            .antMatchers("/api/auth/**", "/api/public/**").permitAll()
 	            .antMatchers("/api/venues/**").permitAll()
+	            .antMatchers("/ai/**").permitAll() // ✅ allow AI assistant endpoints
 	            .antMatchers("/api/booking/**").hasAnyAuthority("USER", "ADMIN") // Admin + User
 	            .antMatchers("/api/dashboard/admin/**").hasAuthority("ADMIN")
 	            .antMatchers("/api/dashboard/user-metrics").hasAuthority("USER")

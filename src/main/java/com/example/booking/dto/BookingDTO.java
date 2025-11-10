@@ -1,5 +1,6 @@
 package com.example.booking.dto;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -27,7 +28,7 @@ public class BookingDTO {
 	private String venueName;
 
 	@JsonProperty("bookingDate")
-	private Date bookingDate;
+	private LocalDate bookingDate;
 
 	@JsonProperty("status")
 	private String status; // PENDING, CONFIRMED, CANCELLED
@@ -78,11 +79,11 @@ public class BookingDTO {
 		this.venueName = venueName;
 	}
 
-	public Date getBookingDate() {
+	public LocalDate getBookingDate() {
 		return bookingDate;
 	}
 
-	public void setBookingDate(Date bookingDate) {
+	public void setBookingDate(LocalDate bookingDate) {
 		this.bookingDate = bookingDate;
 	}
 
